@@ -18,3 +18,4 @@ async function logSession(userId, startTime, endTime, duration) {
 }
 
 module.exports = { logSession };
+ 

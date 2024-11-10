@@ -1,4 +1,3 @@
-// src/models/Achievement.js
 const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema({

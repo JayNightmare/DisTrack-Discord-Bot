@@ -1,5 +1,5 @@
 // src/services/userService.js
-const User = require('../models/User');
+const User = require('../models/User.js');
 
 async function registerUser(userId, username) {
     let user = await User.findOne({ userId });

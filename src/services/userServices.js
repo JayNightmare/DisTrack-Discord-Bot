@@ -33,6 +33,19 @@ async function updateAchievements(userId, achievements) {
     }
 }
 
+async function updateUserBadges(userId, badge) {
+    try {
+        const user = await User.findOneAndUpdate(
+            { userId },
+            { $addToSet: { badges: badge } }, // Only add if it doesn’t exist
+            { new: true, upsert: true }
+        );
+        return user;
+    } catch (error) {
+        console.error("Error updating badges:", error);
+    }
+}
+
 async function getUserData(userId) {
     try {
         const user = await User.findOne({ userId });
@@ -46,4 +59,4 @@ async function getUserData(userId) {
     }
 }
 
-module.exports = { registerUser, updateUserCodingTime, updateAchievements, getUserData };
+module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, getUserData };

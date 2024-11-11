@@ -1,18 +1,18 @@
-Here’s a `README.md` template for your Discord bot. This file covers setup, usage, commands, and contribution guidelines.
-
-```markdown
 # DisTrack - Discord Coding Tracker Bot
 
 DisTrack is a Discord bot that integrates with a VSCode extension to help you track your coding activities, including time spent coding, languages used, achievements, and streaks.
 
 ## Table of Contents
-- [Features](#features)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Commands](#commands)
-- [Contributing](#contributing)
-- [License](#license)
+- [DisTrack - Discord Coding Tracker Bot](#distrack---discord-coding-tracker-bot)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+  - [Commands](#commands)
+  - [Example Usage](#example-usage)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Features
 

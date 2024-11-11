@@ -78,6 +78,11 @@ module.exports = {
             const progressToNextMilestone = Math.min(((user.totalCodingTime % nextMilestone.target) / nextMilestone.target) * 100, 100);
             const milestoneText = `• ${nextMilestone.name} (${formatTime(nextMilestone.target)})\n\n📈 Progress: ${progressToNextMilestone.toFixed(1)}%`;
 
+            // Display Badges
+            const badges = user.badges.length > 0
+                ? user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`).join('\n')
+                : "No badges earned yet.";
+
             // Main profile embed
             const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')
@@ -86,10 +91,13 @@ module.exports = {
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },
+                    { name: "⏱️ Last Session", value: lastSession, inline: true },
+                    { name: '\u200B', value: '\u200B', inline: false },
                     { name: "🔥 Current Streak", value: `${dailyCodingStreak} days`, inline: true },
                     { name: "🏆 Longest Streak", value: `${longestStreak} days`, inline: true },
-                    { name: "⏱️ Last Session", value: lastSession, inline: false },
-                    { name: "🎯 Next Achievement", value: milestoneText, inline: false }
+                    { name: '\u200B', value: '\u200B', inline: false },
+                    { name: "🎯 Next Achievement", value: milestoneText, inline: true },
+                    { name: "🏆 Badges", value: badges, inline: true },
                 )
                 .setFooter({ text: "Use the menu to view achievements or language stats!" });
 

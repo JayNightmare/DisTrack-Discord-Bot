@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
             category: String
         }
     ],
+    badges: [{
+        name: String,
+        icon: String,
+        dateEarned: Date
+    }],
     languages: {
         javascript: { type: Number, default: 0 },
         html: { type: Number, default: 0 },

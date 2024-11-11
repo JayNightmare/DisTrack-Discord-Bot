@@ -54,6 +54,14 @@ async function updateUserPremiumStatus(userId, premiumStatus) {
     );
 }
 
+async function updateUserStreak(userId, streak) {
+    await User.findOneAndUpdate(
+        { userId },
+        { lastSessionDate: streak },
+        { new: true, runValidators: true }
+    );
+}
+
 async function getUserData(userId) {
     try {
         const user = await User.findOne({ userId });
@@ -67,4 +75,4 @@ async function getUserData(userId) {
     }
 }
 
-module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, updateUserPremiumStatus, getUserData };
+module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, updateUserPremiumStatus, updateUserStreak, getUserData };

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
-const { getUserData, updateUserPremiumStatus } = require('../services/userServices.js'); // Update the import path as needed
+const { registerUser, getUserData, updateUserPremiumStatus } = require('../services/userServices.js'); // Update the import path as needed
 
 const webhook = new WebhookClient({ url: process.env.PREMIUM_REMOVAL_REQUEST_WH });
 
@@ -37,7 +37,8 @@ module.exports = {
 
         try {
             // Fetch and update user data
-            const user = await getUserData(userId);
+            let user = await registerUser(userId, targetUser.username);
+            user = await getUserData(userId);
             if (user.premium) {
                 await updateUserPremiumStatus(userId, false); // Function to set user.premium to false
                 await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) has had their premium access removed.`);

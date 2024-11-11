@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
-const { getUserData, updateUserPremiumStatus } = require('../services/userServices.js'); // Update these paths as needed
+const { registerUser, getUserData, updateUserPremiumStatus } = require('../services/userServices.js'); // Update these paths as needed
 
 const webhook = new WebhookClient({ url: process.env.PREMIUM_CONFIRM_REQUEST_WH });
 
@@ -37,7 +37,8 @@ module.exports = {
 
         try {
             // Fetch and update user data
-            const user = await getUserData(userId);
+            let user = await registerUser(userId, targetUser.username);
+            user = await getUserData(userId);
             if (!user.premium) {
                 await updateUserPremiumStatus(userId, true); // Function to set user.premium to true
                 await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) has been granted premium access.`);

@@ -4,7 +4,8 @@ const { WebhookClient, EmbedBuilder } = require('discord.js');
 const { registerUser, getUserData, updateUserBadges } = require('../services/userServices.js');
 require('dotenv').config();
 
-const webhookClient = new WebhookClient({ url: process.env.BUG_REPORT_WH });
+const nWebhookClient = new WebhookClient({ url: process.env.BUG_REPORT_WH });
+const pWebhookClient = new WebhookClient({ url: process.env.P_BUG_REPORT_WH });
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,14 +32,19 @@ module.exports = {
             const bugDescription = interaction.options.getString('bug');
             const importanceLevel = interaction.options.getString('importance');
             const user = interaction.user;
-    
+
+            let userData = await registerUser(user.id, user.username);
+            userData = await getUserData(user.id); // Refetch data
+
+            const isPriority = userData.premium ? ' **[Priority]**' : '';
+
             // Create an embed for the bug report
             const bugReportEmbed = new EmbedBuilder()
                 .setColor(importanceLevel === 'OMG LOOK!! 🚨' ? '#FF0000' :
                           importanceLevel === 'High 🔴' ? '#FF4500' :
                           importanceLevel === 'Medium 🟡' ? '#FFD700' :
                           '#32CD32') // Color based on importance level
-                .setTitle('🐞 New Bug Report 🐞')
+                .setTitle(`🐞 New Bug Report${isPriority} 🐞`)
                 .addFields(
                     { name: 'Reporter', value: `<@${user.id}>\n(user ID: ${user.id})`, inline: true },
                     { name: 'Importance Level', value: importanceLevel, inline: true },
@@ -49,17 +55,13 @@ module.exports = {
                 .setFooter({ text: 'Bug Report System' });
     
             // Send the embed to the webhook
-            await webhookClient.send({
-                embeds: [bugReportEmbed]
-            });
+            if (user.premium) await nWebhookClient.send({ embeds: [bugReportEmbed] });
+            else await pWebhookClient.send({ embeds: [bugReportEmbed] });
 
-            // Register user if they don't exist and retrieve user data
-            let userData = await registerUser(user.id, user.username);
-
-            // Check and add badge
-            userData = await getUserData(user.id);
-            if (!userData.badges.some(badge => badge.name === 'Bug Finder')) {
-                await updateUserBadges(user.id, { name: 'Bug Finder', icon: '<:bugfinder:1305559725244551168>', dateEarned: new Date() });
+            const badgeName = userData.premium ? 'Priority Bug Finder' : 'Bug Finder';
+            const badgeIcon = userData.premium ? '<:prioritybugreporter:1305629236375195668>' : '<:bugfinder:1305559725244551168>';
+            if (!userData.badges.some(badge => badge.name === badgeName)) {
+                await updateUserBadges(user.id, { name: badgeName, icon: badgeIcon, dateEarned: new Date() });
             }
     
             // Confirm to the user

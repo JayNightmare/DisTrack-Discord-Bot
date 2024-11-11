@@ -21,6 +21,14 @@ module.exports = {
             const user = await User.findOne({ userId });
             const target = await User.findOne({ userId: targetUser.id });
 
+            // Check if the user has premium access
+            if (!user.premium) {
+                return await interaction.reply({
+                    content: "This command is a premium feature! Upgrade to premium to access the compare feature",
+                    ephemeral: true
+                });
+            }
+
             if (!user || !target) {
                 return await interaction.reply("Could not retrieve data for one or both users");
             }

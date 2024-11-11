@@ -80,10 +80,7 @@ module.exports = {
             const milestoneText = `📈 Progress: ${progressToNextMilestone.toFixed(1)}%\n\n• ${nextMilestone.name} (${formatTime(nextMilestone.target)})`;
 
             // Display Badges, including Premium Badge if applicable
-            const badges = [
-                ...user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`),
-                user.premium ? "<:sponsor:1305558116624236595> Premium Member" : null
-            ].filter(Boolean).join('\n') || "No badges earned yet.";
+            const badges = [...user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`)].filter(Boolean).join('\n') || "No badges earned yet.";
 
             // Main profile embed
             const profileEmbed = new EmbedBuilder()

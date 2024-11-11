@@ -18,6 +18,9 @@ module.exports = {
         const userId = interaction.user.id;
         const username = interaction.user.username;
 
+        let user = await registerUser(userId, username);
+            user = await getUserData(userId);
+
         const embed = new EmbedBuilder()
             .setTitle('Premium Access Request')
             .setDescription(`User ${username} has requested premium access.`)

@@ -12,7 +12,7 @@ async function registerUser(userId, username) {
 
 async function updateUserCodingTime(userId, additionalTime) {
     const user = await User.findOne({ userId });
-    if (!user) throw new Error("User not found for updating coding time.");
+    if (!user) throw new Error("User not found for updating coding time");
 
     user.totalCodingTime += additionalTime;
     await user.save();

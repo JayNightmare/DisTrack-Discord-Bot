@@ -7,12 +7,13 @@ const User = require('../models/User.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('leaderboard')
-        .setDescription('Displays the top coders with the most time tracked.'),
+        .setDescription('Displays the top coders with the most time tracked'),
     async execute(interaction) {
         try {
             const topUsers = await User.find().sort({ totalCodingTime: -1 }).limit(10);
-            const leaderboard = topUsers.map((user, index) => 
-                `#${index + 1} - **${user.username}**: ${formatTime(user.totalCodingTime)}`
+            console.log("Top Users:", topUsers);
+            const leaderboard = topUsers.map((user, index) =>
+                `#${index + 1} - **<@${user.userId}>**: ${formatTime(user.totalCodingTime)}`
             ).join('\n');
 
             const embed = new EmbedBuilder()
@@ -24,7 +25,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
-            await interaction.reply("There was an error retrieving the leaderboard.");
+            await interaction.reply("There was an error retrieving the leaderboard");
         }
     }
 };

@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 async function awardAchievement(userId, achievementName, requiredHours) {
     const user = await User.findOne({ userId });
-    if (!user) throw new Error("User not found for achievement award.");
+    if (!user) throw new Error("User not found for achievement award");
 
     const achievement = await Achievement.create({
         name: achievementName,

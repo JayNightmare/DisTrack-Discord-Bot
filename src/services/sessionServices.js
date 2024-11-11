@@ -4,7 +4,7 @@ const User = require('../models/User');
 
 async function logSession(userId, startTime, endTime, duration) {
     const user = await User.findOne({ userId });
-    if (!user) throw new Error("User not found for session log.");
+    if (!user) throw new Error("User not found for session log");
 
     const session = await Session.create({
         user: user._id,

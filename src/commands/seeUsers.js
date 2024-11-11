@@ -14,7 +14,7 @@ module.exports = {
 
             // Check if there are any users stored
             if (!users || users.length === 0) {
-                return interaction.reply({ content: 'No users found in the database.', ephemeral: true });
+                return interaction.reply({ content: 'No users found in the database', ephemeral: true });
             }
 
             // Create a formatted string of users to display
@@ -33,7 +33,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Error fetching users:', error);
-            await interaction.reply({ content: 'There was an error retrieving the user list.', ephemeral: true });
+            await interaction.reply({ content: 'There was an error retrieving the user list', ephemeral: true });
         }
     }
 };

@@ -2,6 +2,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { registerUser, updateAchievements } = require('../services/userServices.js');
 const { checkForAchievements, getNextMilestone } = require('../utils/checkMilestones.js');
+const { formatTime } = require('../utils/formatTime.js');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -31,7 +32,7 @@ module.exports = {
             const languageStats = Object.entries(user.languages)
                 .filter(([_, time]) => time > 0)  // Only include languages with non-zero time
                 .map(([lang, time]) => `• ${capitalizeFirstLetter(lang)}: ${formatTime(time)}`)
-                .join('\n') || "No language data recorded.";
+                .join('\n') || "No language data recorded";
 
 
             // Calculate time stats
@@ -41,7 +42,7 @@ module.exports = {
             const lastSession = user.lastSessionDate ? new Date(user.lastSessionDate).toLocaleString() : "No recent session";
 
             // Highlight recent achievements
-            const achievements = user.achievements.map(a => `• ${a.name}: ${a.description}`).join('\n') || "No achievements yet.";
+            const achievements = user.achievements.map(a => `• ${a.name}: ${a.description}`).join('\n') || "No achievements yet";
             
             // Milestones and progress bar
             const nextMilestone = getNextMilestone(user.totalCodingTime || 0);
@@ -73,7 +74,7 @@ module.exports = {
         } catch (error) {
             console.error("Error fetching profile:", error);
             await interaction.reply({
-                content: "There was an error fetching your profile.",
+                content: "There was an error fetching your profile",
                 ephemeral: true,
             });
         }

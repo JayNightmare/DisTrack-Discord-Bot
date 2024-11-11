@@ -13,11 +13,11 @@ module.exports = {
             if (duration) {
                 sendEmbed(interaction, "Coding Session Duration", `You coded for ${duration} seconds.`);
             } else {
-                sendEmbed(interaction, "No Data", "No coding session data found for you.");
+                sendEmbed(interaction, "No Data", "No coding session data found for you");
             }
         } catch (error) {
             console.error("Error displaying duration:", error);
-            sendEmbed(interaction, "Error", "An error occurred while retrieving your coding data.");
+            sendEmbed(interaction, "Error", "An error occurred while retrieving your coding data");
         }
     },
 };

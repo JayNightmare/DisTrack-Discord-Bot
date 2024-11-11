@@ -7,7 +7,7 @@ const { formatTime } = require('../utils/formatTime');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('recent')
-        .setDescription("Shows your recent coding activity."),
+        .setDescription("Shows your recent coding activity"),
     async execute(interaction) {
         try {
             const userId = interaction.user.id;
@@ -21,7 +21,7 @@ module.exports = {
             const languageStats = Object.entries(user.languages)
                 .filter(([, time]) => time > 0)
                 .map(([lang, time]) => `• ${capitalize(lang)}: ${formatTime(time)}`)
-                .join('\n') || "No language data recorded.";
+                .join('\n') || "No language data recorded";
 
             const embed = new EmbedBuilder()
                 .setColor('#32CD32')
@@ -35,7 +35,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error("Error fetching recent activity:", error);
-            await interaction.reply("There was an error retrieving your recent activity.");
+            await interaction.reply("There was an error retrieving your recent activity");
         }
     }
 };

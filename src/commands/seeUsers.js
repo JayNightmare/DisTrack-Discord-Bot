@@ -18,7 +18,7 @@ module.exports = {
             }
 
             // Create a formatted string of users to display
-            const userList = users.map(user => `UserID: ${user.userId}, Total Coding Time: ${user.totalCodingTime} seconds`).join('\n');
+            const userList = users.map(user =>`- Name: <@${user.userId}>\n- User ID: ${user.userId}\n- Database ID: ${user.id}\n- Total Coding Time: ${user.totalCodingTime} seconds`).join('\n\n');
 
             // Send the formatted list as an embed
             const embed = {

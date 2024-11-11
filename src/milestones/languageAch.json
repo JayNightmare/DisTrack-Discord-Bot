@@ -1,0 +1,43 @@
+[
+    { "name": "JavaScript Beginner 🥉", "target": 1800, "language": "javascript", "description": "Reached 30 minutes in JavaScript", "category": "language" },
+    { "name": "JavaScript Ninja 🥷", "target": 3600, "language": "javascript", "description": "Reached 1 hour in JavaScript", "category": "language" },
+    { "name": "JavaScript Master 💪", "target": 14400, "language": "javascript", "description": "Reached 4 hours in JavaScript", "category": "language" },
+    { "name": "JavaScript Prodigy 🌟", "target": 43200, "language": "javascript", "description": "Reached 12 hours in JavaScript", "category": "language" },
+
+    { "name": "Python Novice 🥉", "target": 1800, "language": "python", "description": "Reached 30 minutes in Python", "category": "language" },
+    { "name": "Python Pro 🐍", "target": 3600, "language": "python", "description": "Reached 1 hour in Python", "category": "language" },
+    { "name": "Python Wizard 🧙", "target": 14400, "language": "python", "description": "Reached 4 hours in Python", "category": "language" },
+    { "name": "Python Sage 🌌", "target": 43200, "language": "python", "description": "Reached 12 hours in Python", "category": "language" },
+
+    { "name": "CSS Stylist 🎨", "target": 1800, "language": "css", "description": "Reached 30 minutes in CSS", "category": "language" },
+    { "name": "CSS Designer 💅", "target": 3600, "language": "css", "description": "Reached 1 hour in CSS", "category": "language" },
+    { "name": "CSS Masterpiece Creator 🖌️", "target": 14400, "language": "css", "description": "Reached 4 hours in CSS", "category": "language" },
+
+    { "name": "HTML Architect 🏗️", "target": 1800, "language": "html", "description": "Reached 30 minutes in HTML", "category": "language" },
+    { "name": "HTML Builder 🚧", "target": 3600, "language": "html", "description": "Reached 1 hour in HTML", "category": "language" },
+    { "name": "HTML Virtuoso 🏆", "target": 14400, "language": "html", "description": "Reached 4 hours in HTML", "category": "language" },
+
+    { "name": "SQL Novice 🥉", "target": 1800, "language": "sql", "description": "Reached 30 minutes in SQL", "category": "language" },
+    { "name": "SQL Pro 📊", "target": 3600, "language": "sql", "description": "Reached 1 hour in SQL", "category": "language" },
+    { "name": "SQL Data Guru 🧠", "target": 14400, "language": "sql", "description": "Reached 4 hours in SQL", "category": "language" },
+
+    { "name": "Java Learner 📘", "target": 1800, "language": "java", "description": "Reached 30 minutes in Java", "category": "language" },
+    { "name": "Java Developer ☕", "target": 3600, "language": "java", "description": "Reached 1 hour in Java", "category": "language" },
+    { "name": "Java Expert 🎖️", "target": 14400, "language": "java", "description": "Reached 4 hours in Java", "category": "language" },
+
+    { "name": "PHP Padawan 🔰", "target": 1800, "language": "php", "description": "Reached 30 minutes in PHP", "category": "language" },
+    { "name": "PHP Coder 🖥️", "target": 3600, "language": "php", "description": "Reached 1 hour in PHP", "category": "language" },
+    { "name": "PHP Jedi 🌌", "target": 14400, "language": "php", "description": "Reached 4 hours in PHP", "category": "language" },
+
+    { "name": "C++ Novice 🥉", "target": 1800, "language": "cpp", "description": "Reached 30 minutes in C++", "category": "language" },
+    { "name": "C++ Developer 💻", "target": 3600, "language": "cpp", "description": "Reached 1 hour in C++", "category": "language" },
+    { "name": "C++ Ace 🏅", "target": 14400, "language": "cpp", "description": "Reached 4 hours in C++", "category": "language" },
+
+    { "name": "TypeScript Newbie 🥉", "target": 1800, "language": "typescript", "description": "Reached 30 minutes in TypeScript", "category": "language" },
+    { "name": "TypeScript Coder ✨", "target": 3600, "language": "typescript", "description": "Reached 1 hour in TypeScript", "category": "language" },
+    { "name": "TypeScript Wizard 🪄", "target": 14400, "language": "typescript", "description": "Reached 4 hours in TypeScript", "category": "language" },
+
+    { "name": "Swift Beginner 📱", "target": 1800, "language": "swift", "description": "Reached 30 minutes in Swift", "category": "language" },
+    { "name": "Swift Coder 🍏", "target": 3600, "language": "swift", "description": "Reached 1 hour in Swift", "category": "language" },
+    { "name": "Swift Expert 🏆", "target": 14400, "language": "swift", "description": "Reached 4 hours in Swift", "category": "language" }
+]

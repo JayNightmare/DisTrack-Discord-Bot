@@ -1,0 +1,12 @@
+[
+    { "name": "Novice 🥉", "target": 3600, "description": "Reached 1 hour of coding", "category": "time" },
+    { "name": "Intermediate 🥈", "target": 14400, "description": "Reached 4 hours of coding", "category": "time" },
+    { "name": "Pro 🥇", "target": 86400, "description": "Reached 1 day of coding", "category": "time" },
+    { "name": "Expert 🏅", "target": 172800, "description": "Reached 2 days of coding", "category": "time" },
+    { "name": "Master 🏆", "target": 604800, "description": "Reached 1 week of coding", "category": "time" },
+    { "name": "Elite 👑", "target": 2592000, "description": "Reached 30 days of coding", "category": "time" },
+    { "name": "Legendary 🌟", "target": 7776000, "description": "Reached 90 days of coding", "category": "time" },
+    { "name": "Ultimate 🌠", "target": 15552000, "description": "Reached 180 days of coding", "category": "time" },
+    { "name": "Immortal 💻", "target": 31104000, "description": "Reached 1 year of coding", "category": "time" },
+    { "name": "Coding God ⚡", "target": 62208000, "description": "Reached 2 years of coding", "category": "time" }
+]

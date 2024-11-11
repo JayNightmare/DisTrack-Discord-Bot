@@ -20,16 +20,31 @@ async function updateUserCodingTime(userId, additionalTime) {
     return user;
 }
 
-async function updateAchievements(userId, achievement) {
+async function updateAchievements(userId, achievements) {
     try {
         await User.findOneAndUpdate(
             { userId },
-            { $push: { achievements: { $each: achievement } } },
+            { $addToSet: { achievements: { $each: achievements } } }, // `$addToSet` ensures no duplicates
             { new: true, runValidators: true }
         );
+        console.log(`Achievements updated for user ${userId}:`, achievements);
     } catch (error) {
         console.error("Error updating achievements:", error);
     }
 }
 
-module.exports = { registerUser, updateUserCodingTime, updateAchievements };
+
+async function getUserData(userId) {
+    try {
+        const user = await User.findOne({ userId });
+        if (!user) {
+            throw new Error(`User with ID ${userId} not found`);
+        }
+        return user;
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        throw error;
+    }
+}
+
+module.exports = { registerUser, updateUserCodingTime, updateAchievements, getUserData };

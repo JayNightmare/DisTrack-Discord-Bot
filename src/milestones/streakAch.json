@@ -1,0 +1,7 @@
+[
+    { "name": "Streak Starter 🔥", "target": 7, "description": "Maintained a 7-day coding streak", "category": "streak" },
+    { "name": "Weekly Warrior 💪", "target": 30, "description": "Maintained a 30-day coding streak", "category": "streak" },
+    { "name": "Monthly Master 🌕", "target": 90, "description": "Maintained a 90-day coding streak", "category": "streak" },
+    { "name": "Ultimate Streak 💯", "target": 180, "description": "Maintained a 180-day coding streak", "category": "streak" },
+    { "name": "Infinite Coder ♾️", "target": 365, "description": "Maintained a 365-day coding streak", "category": "streak" }
+]

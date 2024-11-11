@@ -1,7 +1,12 @@
 // src/commands/profile.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { registerUser, updateAchievements } = require('../services/userServices.js');
-const { checkForAchievements, getNextMilestone } = require('../utils/checkMilestones.js');
+const { registerUser, getUserData, updateAchievements } = require('../services/userServices.js');
+const {
+    checkForCodingAchievements,
+    checkForStreakAchievements,
+    checkForLanguageAchievements,
+    getNextMilestone
+} = require('../utils/checkMilestones.js');
 const { formatTime } = require('../utils/formatTime.js');
 const { EmbedBuilder } = require('discord.js');
 
@@ -22,18 +27,47 @@ module.exports = {
             const userDisplayName = targetUser.displayName;
 
             // Register user if they don't exist and retrieve user data
-            const user = await registerUser(userId, username);
+            let user = await registerUser(userId, username);
 
-            const newAchievement = await checkForAchievements(user);
-            if (newAchievement) {
-                await updateAchievements(userId, newAchievement);
+            // Check for new achievements in each category
+            const newCodingAchievements = await checkForCodingAchievements(user);
+            const newStreakAchievements = await checkForStreakAchievements(user);
+            const newLanguageAchievements = await checkForLanguageAchievements(user);
+
+            const allNewAchievements = [
+                ...newCodingAchievements,
+                ...newStreakAchievements,
+                ...newLanguageAchievements
+            ];
+
+            if (allNewAchievements.length > 0) {
+                await updateAchievements(userId, allNewAchievements);
+                user = await getUserData(userId); // Refetch user data
             }
 
+            // Separate formatted strings for each achievement category
+            const codingTimeAchievements = user.achievements
+                .filter(a => a.category === 'time')
+                .map(a => `• ${a.name}: ${a.description}`)
+                .join('\n') || "No coding time milestones yet.";
+
+            console.log(user.achievements);
+
+            const languageAchievements = user.achievements
+                .filter(a => a.category === 'language')
+                .map(a => `• ${a.name}: ${a.description}`)
+                .join('\n') || "No language milestones yet.";
+
+            const streakAchievements = user.achievements
+                .filter(a => a.category === 'streak')
+                .map(a => `• ${a.name}: ${a.description}`)
+                .join('\n') || "No streak achievements yet.";
+
+            // Filter and format language stats
             const languageStats = Object.entries(user.languages)
                 .filter(([_, time]) => time > 0)  // Only include languages with non-zero time
                 .map(([lang, time]) => `• ${capitalizeFirstLetter(lang)}: ${formatTime(time)}`)
                 .join('\n') || "No language data recorded";
-
 
             // Calculate time stats
             const totalCodingTime = formatTime(user.totalCodingTime || 0);
@@ -41,22 +75,16 @@ module.exports = {
             const longestStreak = user.longestStreak || 0;
             const lastSession = user.lastSessionDate ? new Date(user.lastSessionDate).toLocaleString() : "No recent session";
 
-            // Highlight recent achievements
-            const achievements = user.achievements.map(a => `• ${a.name}: ${a.description}`).join('\n') || "No achievements yet";
-            
             // Milestones and progress bar
             const nextMilestone = getNextMilestone(user.totalCodingTime || 0);
             const progressToNextMilestone = Math.min(((user.totalCodingTime % nextMilestone.target) / nextMilestone.target) * 100, 100);
-            // const progressBar = createProgressBar(progressToNextMilestone);
-
             const milestoneText = `• ${nextMilestone.name} (${formatTime(nextMilestone.target)})\n\n📈 Progress: ${progressToNextMilestone.toFixed(1)}%`;
-            // %\n${progressBar}`;
 
             // Create the embed
             const embed = new EmbedBuilder()
                 .setColor('#1d5b5b')
                 .setTitle(`${userDisplayName}'s Coding Profile`)
-                .setThumbnail(targetUser.displayAvatarURL({ dynamic: true })) // User's profile picture
+                .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },
@@ -64,10 +92,12 @@ module.exports = {
                     { name: "🏆 Longest Streak", value: `${longestStreak} days`, inline: true },
                     { name: "⏱️ Last Session", value: lastSession, inline: false },
                     { name: "🔣 Languages", value: languageStats, inline: false },
-                    { name: "🌟 Achievements", value: achievements, inline: false },
+                    { name: "🌟 Coding Time Milestones", value: codingTimeAchievements, inline: true },
+                    { name: "🗂️ Language Milestones", value: languageAchievements, inline: true },
+                    { name: "🔥 Streak Achievements", value: streakAchievements, inline: true },
                     { name: "🎯 Next Achievement", value: milestoneText, inline: false }
                 )
-                .setFooter({ text: "Keep coding and reach new milestones! 💻"});
+                .setFooter({ text: "Keep coding and reach new milestones! 💻" });
 
             // Send the embed
             await interaction.reply({ embeds: [embed] });
@@ -84,13 +114,3 @@ module.exports = {
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
-
-// // Function to create a text-based progress bar
-// function createProgressBar(progress) {
-//     const totalBars = 10;
-//     const filledBars = Math.round((progress / 100) * totalBars);
-//     const emptyBars = totalBars - filledBars;
-//     const progressBar = "█".repeat(filledBars) + "░".repeat(emptyBars); // Filled bars and empty bars
-//     return `[${progressBar}] ${progress.toFixed(2)}%`;
-// }

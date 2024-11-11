@@ -20,4 +20,16 @@ async function updateUserCodingTime(userId, additionalTime) {
     return user;
 }
 
-module.exports = { registerUser, updateUserCodingTime };
+async function updateAchievements(userId, achievement) {
+    try {
+        await User.findOneAndUpdate(
+            { userId },
+            { $push: { achievements: { $each: achievement } } },
+            { new: true, runValidators: true }
+        );
+    } catch (error) {
+        console.error("Error updating achievements:", error);
+    }
+}
+
+module.exports = { registerUser, updateUserCodingTime, updateAchievements };

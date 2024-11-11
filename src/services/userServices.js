@@ -46,6 +46,14 @@ async function updateUserBadges(userId, badge) {
     }
 }
 
+async function updateUserPremiumStatus(userId, premiumStatus) {
+    await User.findOneAndUpdate(
+        { userId },
+        { premium: premiumStatus },
+        { new: true, runValidators: true }
+    );
+}
+
 async function getUserData(userId) {
     try {
         const user = await User.findOne({ userId });
@@ -59,4 +67,4 @@ async function getUserData(userId) {
     }
 }
 
-module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, getUserData };
+module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, updateUserPremiumStatus, getUserData };

@@ -33,7 +33,6 @@ async function updateAchievements(userId, achievements) {
     }
 }
 
-
 async function getUserData(userId) {
     try {
         const user = await User.findOne({ userId });

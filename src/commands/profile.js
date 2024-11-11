@@ -8,7 +8,7 @@ const {
     getNextMilestone
 } = require('../utils/checkMilestones.js');
 const { formatTime } = require('../utils/formatTime.js');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -46,12 +46,10 @@ module.exports = {
             }
 
             // Separate formatted strings for each achievement category
-            const codingTimeAchievements = user.achievements
+            const timeAchievements = user.achievements
                 .filter(a => a.category === 'time')
                 .map(a => `• ${a.name}: ${a.description}`)
                 .join('\n') || "No coding time milestones yet.";
-
-            console.log(user.achievements);
 
             const languageAchievements = user.achievements
                 .filter(a => a.category === 'language')
@@ -75,13 +73,13 @@ module.exports = {
             const longestStreak = user.longestStreak || 0;
             const lastSession = user.lastSessionDate ? new Date(user.lastSessionDate).toLocaleString() : "No recent session";
 
-            // Milestones and progress bar
+            // Milestone and progress bar
             const nextMilestone = getNextMilestone(user.totalCodingTime || 0);
             const progressToNextMilestone = Math.min(((user.totalCodingTime % nextMilestone.target) / nextMilestone.target) * 100, 100);
             const milestoneText = `• ${nextMilestone.name} (${formatTime(nextMilestone.target)})\n\n📈 Progress: ${progressToNextMilestone.toFixed(1)}%`;
 
-            // Create the embed
-            const embed = new EmbedBuilder()
+            // Main profile embed
+            const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')
                 .setTitle(`${userDisplayName}'s Coding Profile`)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
@@ -91,16 +89,74 @@ module.exports = {
                     { name: "🔥 Current Streak", value: `${dailyCodingStreak} days`, inline: true },
                     { name: "🏆 Longest Streak", value: `${longestStreak} days`, inline: true },
                     { name: "⏱️ Last Session", value: lastSession, inline: false },
-                    { name: "🔣 Languages", value: languageStats, inline: false },
-                    { name: "🌟 Coding Time Milestones", value: codingTimeAchievements, inline: true },
-                    { name: "🗂️ Language Milestones", value: languageAchievements, inline: true },
-                    { name: "🔥 Streak Achievements", value: streakAchievements, inline: true },
                     { name: "🎯 Next Achievement", value: milestoneText, inline: false }
                 )
-                .setFooter({ text: "Keep coding and reach new milestones! 💻" });
+                .setFooter({ text: "Use the menu to view achievements or language stats!" });
 
-            // Send the embed
-            await interaction.reply({ embeds: [embed] });
+            // Action row with select menu for navigation
+            const row = new ActionRowBuilder().addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId('profile_select')
+                    .setPlaceholder('Choose what to view')
+                    .addOptions([
+                        {
+                            label: 'Profile Overview',
+                            description: 'View your main profile overview',
+                            value: 'profile_overview'
+                        },
+                        {
+                            label: 'Achievements',
+                            description: 'View coding time, language, and streak achievements',
+                            value: 'achievements'
+                        },
+                        {
+                            label: 'Languages',
+                            description: 'View time spent coding in each language',
+                            value: 'languages'
+                        }
+                    ])
+            );
+
+            // Send the main profile embed
+            const message = await interaction.reply({ embeds: [profileEmbed], components: [row], fetchReply: true });
+
+            // Handle select menu interaction
+            const filter = i => i.user.id === interaction.user.id;
+            const collector = message.createMessageComponentCollector({ filter, time: 60000 });
+
+            collector.on('collect', async i => {
+                let selectedEmbed;
+
+                if (i.values[0] === 'profile_overview') {
+                    // Back to main profile view
+                    selectedEmbed = profileEmbed;
+                } else if (i.values[0] === 'achievements') {
+                    // Show achievements
+                    selectedEmbed = new EmbedBuilder()
+                        .setColor('#1d5b5b')
+                        .setTitle(`${userDisplayName}'s Achievements`)
+                        .addFields(
+                            { name: "🌟 Coding Time Milestones", value: timeAchievements, inline: false },
+                            { name: "🗂️ Language Milestones", value: languageAchievements, inline: false },
+                            { name: "🔥 Streak Achievements", value: streakAchievements, inline: false }
+                        )
+                        .setFooter({ text: "Use the menu to switch views!" });
+                } else if (i.values[0] === 'languages') {
+                    // Show language stats
+                    selectedEmbed = new EmbedBuilder()
+                        .setColor('#1d5b5b')
+                        .setTitle(`${userDisplayName}'s Language Stats`)
+                        .setDescription(languageStats)
+                        .setFooter({ text: "Use the menu to switch views!" });
+                }
+
+                await i.update({ embeds: [selectedEmbed], components: [row] });
+            });
+
+            collector.on('end', () => {
+                row.components.forEach(component => component.setDisabled(true));
+                message.edit({ components: [row] });
+            });
         } catch (error) {
             console.error("Error fetching profile:", error);
             await interaction.reply({

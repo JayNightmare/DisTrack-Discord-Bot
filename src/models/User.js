@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
         {
             name: String,
             target: Number,
-            description: String
+            description: String,
+            category: String
         }
     ],
     languages: {

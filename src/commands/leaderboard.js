@@ -1,21 +1,30 @@
 // src/commands/leaderboard.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { sendEmbed } = require('../utils/sendEmbed');
-const User = require('../models/User'); // Assuming you have a User schema
+const { EmbedBuilder } = require('discord.js');
+const { formatTime } = require('../utils/formatTime');
+const User = require('../models/User.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('leaderboard')
-        .setDescription('Displays the top users based on coding time'),
+        .setDescription('Displays the top coders with the most time tracked.'),
     async execute(interaction) {
         try {
             const topUsers = await User.find().sort({ totalCodingTime: -1 }).limit(10);
-            const leaderboard = topUsers.map((user, index) => `${index + 1}. ${user.username}: ${user.totalCodingTime} hrs`).join('\n');
-            
-            sendEmbed(interaction, "Leaderboard", leaderboard || "No data available.");
+            const leaderboard = topUsers.map((user, index) => 
+                `#${index + 1} - **${user.username}**: ${formatTime(user.totalCodingTime)}`
+            ).join('\n');
+
+            const embed = new EmbedBuilder()
+                .setColor('#FFD700')
+                .setTitle("🏆 Coding Leaderboard 🏆")
+                .setDescription(leaderboard)
+                .setFooter({ text: "Keep coding to climb the leaderboard!" });
+
+            await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error("Error fetching leaderboard:", error);
-            sendEmbed(interaction, "Error", "Could not fetch leaderboard.");
+            await interaction.reply("There was an error retrieving the leaderboard.");
         }
-    },
+    }
 };

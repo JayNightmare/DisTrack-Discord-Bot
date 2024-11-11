@@ -1,4 +1,3 @@
-// src/commands/profile.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { registerUser, getUserData, updateAchievements } = require('../services/userServices.js');
 const {
@@ -61,27 +60,30 @@ module.exports = {
                 .map(a => `• ${a.name}: ${a.description}`)
                 .join('\n') || "No streak achievements yet.";
 
-            // Filter and format language stats
-            const languageStats = Object.entries(user.languages)
-                .filter(([_, time]) => time > 0)  // Only include languages with non-zero time
-                .map(([lang, time]) => `• ${capitalizeFirstLetter(lang)}: ${formatTime(time)}`)
-                .join('\n') || "No language data recorded";
-
             // Calculate time stats
             const totalCodingTime = formatTime(user.totalCodingTime || 0);
             const dailyCodingStreak = user.currentStreak || 0;
             const longestStreak = user.longestStreak || 0;
             const lastSession = user.lastSessionDate ? new Date(user.lastSessionDate).toLocaleString() : "No recent session";
 
+            // Premium Check: Only show language stats for premium users
+            const languageStats = user.premium
+                ? Object.entries(user.languages)
+                    .filter(([_, time]) => time > 0)  // Only include languages with non-zero time
+                    .map(([lang, time]) => `• ${capitalizeFirstLetter(lang)}: ${formatTime(time)}`)
+                    .join('\n') || "No language data recorded."
+                : "Unlock Premium to view detailed language stats.";
+
             // Milestone and progress bar
             const nextMilestone = getNextMilestone(user.totalCodingTime || 0);
             const progressToNextMilestone = Math.min(((user.totalCodingTime % nextMilestone.target) / nextMilestone.target) * 100, 100);
-            const milestoneText = `• ${nextMilestone.name} (${formatTime(nextMilestone.target)})\n\n📈 Progress: ${progressToNextMilestone.toFixed(1)}%`;
+            const milestoneText = `📈 Progress: ${progressToNextMilestone.toFixed(1)}%\n\n• ${nextMilestone.name} (${formatTime(nextMilestone.target)})`;
 
-            // Display Badges
-            const badges = user.badges.length > 0
-                ? user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`).join('\n')
-                : "No badges earned yet.";
+            // Display Badges, including Premium Badge if applicable
+            const badges = [
+                ...user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`),
+                user.premium ? "<:sponsor:1305558116624236595> Premium Member" : null
+            ].filter(Boolean).join('\n') || "No badges earned yet.";
 
             // Main profile embed
             const profileEmbed = new EmbedBuilder()
@@ -150,7 +152,7 @@ module.exports = {
                         )
                         .setFooter({ text: "Use the menu to switch views!" });
                 } else if (i.values[0] === 'languages') {
-                    // Show language stats
+                    // Show language stats (premium check already applied)
                     selectedEmbed = new EmbedBuilder()
                         .setColor('#1d5b5b')
                         .setTitle(`${userDisplayName}'s Language Stats`)

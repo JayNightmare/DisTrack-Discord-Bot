@@ -95,6 +95,3 @@ This command displays the coding profile of a specified user, showing their codi
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-```
-
-This `README.md` file explains setup, configuration, and usage details, providing a complete guide for users and contributors. Let me know if you'd like to add anything specific to the file!

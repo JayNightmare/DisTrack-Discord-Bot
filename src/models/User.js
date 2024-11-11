@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
         markdown: { type: Number, default: 0 },
         properties: { type: Number, default: 0 },
     },
-    lastSessionDate: { type: Date, default: null }, // New field to track last coding session date
+    premium: { type: Boolean, default: false },
+    lastSessionDate: { type: Date, default: null },
 });
 
 module.exports = mongoose.model("User", userSchema);

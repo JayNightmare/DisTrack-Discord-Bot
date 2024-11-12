@@ -87,6 +87,7 @@ module.exports = {
                 .setColor('#1d5b5b')
                 .setTitle(`${userDisplayName}'s Coding Profile`)
                 .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
+                // .setDescription(user.bio || `Your Coding Stats!`)
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },
@@ -99,6 +100,8 @@ module.exports = {
                     { name: "🏆 Badges", value: badges, inline: true },
                 )
                 .setFooter({ text: "Use the menu to view achievements or language stats!" });
+
+            if (user.bio) profileEmbed.setDescription(user.bio); 
 
             // Action row with select menu for navigation
             const row = new ActionRowBuilder().addComponents(

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
-const { registerUser, getUserData, updateUserPremiumStatus } = require('../services/userServices.js'); // Update the import path as needed
+const { registerUser, getUserData, updateUserPremiumStatus, updateUserSponsorStatus } = require('../services/userServices.js'); // Update the import path as needed
+require('dotenv').config();
 
 const webhook = new WebhookClient({ url: process.env.PREMIUM_REMOVAL_REQUEST_WH });
 
@@ -12,6 +13,15 @@ module.exports = {
             option.setName('user')
                 .setDescription('The user to remove premium access from.')
                 .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('choice')
+                .setDescription('Sponsor or Premium')
+                .setRequired(true)
+                .addChoices(
+                    { name: 'Sponsor', value: 'sponsor' },
+                    { name: 'Premium', value: 'premium' }
+                )
         ),
 
     async execute(interaction) {
@@ -36,14 +46,36 @@ module.exports = {
         }
 
         try {
+            const choice = interaction.options.getString('choice');
+
             // Fetch and update user data
             let user = await registerUser(userId, targetUser.username);
             user = await getUserData(userId);
-            if (user.premium) {
-                await updateUserPremiumStatus(userId, false); // Function to set user.premium to false
-                await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) has had their premium access removed.`);
-            } else {
-                await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) does not have premium access.`);
+
+            if (choice === 'sponsor') {
+                if (user.sponsor) {
+                    await updateUserSponsorStatus(userId, false);
+
+                    // Remove the sponsor badge
+                    user.badges = user.badges.filter(badge => badge.name !== 'Sponsor');
+                    await user.save();
+
+                    await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) has had sponsor access removed.`);
+                } else {
+                    await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) does not have sponsor access.`);
+                }
+            } else if (choice === 'premium') {
+                if (user.premium) {
+                    await updateUserPremiumStatus(userId, false);
+
+                    // Remove the premium badge
+                    user.badges = user.badges.filter(badge => badge.name !== 'Premium');
+                    await user.save();
+
+                    await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) has had premium access removed.`);
+                } else {
+                    await interaction.reply(`<@${targetUser.id}> (User ID: ${targetUser.id}) does not have premium access.`);
+                }
             }
         } catch (error) {
             console.error("Error removing premium:", error);

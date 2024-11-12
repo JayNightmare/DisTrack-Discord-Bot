@@ -47,6 +47,7 @@ const userSchema = new mongoose.Schema({
     premium: { type: Boolean, default: false },
     sponsor: { type: Boolean, default: false },
     streakFreezeDate: { type: Date, default: null },
+    bio: { type: String, default: '' },
     lastSessionDate: { type: Date, default: null },
 });
 

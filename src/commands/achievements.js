@@ -1,4 +1,3 @@
-// src/commands/showAchievements.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const { registerUser, getUserData } = require('../services/userServices.js');

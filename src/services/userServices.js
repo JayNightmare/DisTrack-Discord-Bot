@@ -54,6 +54,14 @@ async function updateUserPremiumStatus(userId, premiumStatus) {
     );
 }
 
+async function updateUserSponsorStatus(userId, premiumStatus) {
+    await User.findOneAndUpdate(
+        { userId },
+        { sponsor: premiumStatus },
+        { new: true, runValidators: true }
+    );
+}
+
 async function updateUserStreak(userId, streak) {
     await User.findOneAndUpdate(
         { userId },
@@ -75,4 +83,24 @@ async function getUserData(userId) {
     }
 }
 
-module.exports = { registerUser, updateUserCodingTime, updateAchievements, updateUserBadges, updateUserPremiumStatus, updateUserStreak, getUserData };
+async function updateUserBio(userId, bio) {
+    const user = await User.findOne({ userId });
+    if (!user) throw new Error("User not found for bio update");
+
+    user.bio = bio;
+    await user.save();
+    console.log(`Updated bio for ${user.username}: ${bio}`);
+    return user;
+}
+
+module.exports = {
+    registerUser,
+    updateUserCodingTime,
+    updateAchievements,
+    updateUserBadges,
+    updateUserPremiumStatus,
+    updateUserSponsorStatus,
+    updateUserStreak,
+    getUserData,
+    updateUserBio
+};

@@ -45,7 +45,7 @@ async function generateBorderedAvatar(avatarUrl, borderName) {
 
             // Draw avatar and overlay border frame
             context.clearRect(0, 0, canvasSize, canvasSize); // Clear the canvas
-            context.drawImage(avatar, 0, 0, 100, 100); // Draw avatar
+            context.drawImage(avatar, 10, 10, 108, 108); // Draw avatar
             context.drawImage(borderFrame, 0, 0, canvasSize, canvasSize); // Overlay border frame
 
             // Add canvas frame to GIF

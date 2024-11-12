@@ -132,14 +132,14 @@ module.exports = {
                 const selectedBorder = user.border || null;
                 if (selectedBorder) {
                     // Generate the combined avatar with selected border
-                    const avatarWithBorderBuffer = await generateBorderedAvatar(targetUser.displayAvatarURL({ format: 'png', size: 128 }), selectedBorder);
+                    const avatarWithBorderBuffer = await generateBorderedAvatar(targetUser.displayAvatarURL({ format: 'gif', size: 128 }), selectedBorder);
                     attachment = new AttachmentBuilder(avatarWithBorderBuffer, { name: 'profile_with_border.gif' });
             
                     // Use the attachment as the thumbnail
                     profileEmbed.setThumbnail('attachment://profile_with_border.gif');
             
                     // Send the embed with the attachment
-                    return interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment] });
+                    // return interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment] });
                 } else {
                     // If no custom border is selected, use regular avatar
                     profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
@@ -151,7 +151,7 @@ module.exports = {
             }
 
             // Send the main profile embed
-            const message = await interaction.reply({ embeds: [profileEmbed], components: [row], fetchReply: true });
+            const message = await interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment], fetchReply: true });
 
             // Handle select menu interaction
             const filter = i => i.user.id === interaction.user.id;

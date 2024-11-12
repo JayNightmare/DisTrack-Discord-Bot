@@ -12,10 +12,12 @@ module.exports = {
                 .setDescription('Select a border')
                 .setRequired(true)
                 .addChoices(
-                    { name: 'Bunny', value: '../borders/bunny' },
                     { name: 'Evil Purple', value: '../borders/evil-purple' },
                     { name: 'Window View', value: '../borders/window-view' },
-                    { name: 'XP Window', value: '../borders/xp-window'}
+                    { name: 'XP Window', value: '../borders/xp-window'},
+                    { name: 'Terminal', value: '../borders/terminal'},
+                    { name: 'Gloop', value: '../borders/gloop' },
+                    { name: 'Snow Border', value: '../borders/snow-border'},
                 )
         ),
 

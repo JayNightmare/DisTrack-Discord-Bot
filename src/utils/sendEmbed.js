@@ -1,4 +1,3 @@
-// src/utils/sendEmbed.js
 const { EmbedBuilder } = require("discord.js");
 
 function sendEmbed(channel, title, description) {

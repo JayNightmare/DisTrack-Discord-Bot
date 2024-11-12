@@ -6,6 +6,7 @@ const {
     checkForLanguageAchievements,
     getNextMilestone
 } = require('../utils/checkMilestones.js');
+const { generateBorderedAvatar } = require('../utils/generateBorderedAvatar.js');
 const { formatTime } = require('../utils/formatTime.js');
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 
@@ -101,7 +102,18 @@ module.exports = {
                 )
                 .setFooter({ text: "Use the menu to view achievements or language stats!" });
 
-            if (user.bio) profileEmbed.setDescription(user.bio); 
+            if (user.bio) profileEmbed.setDescription(user.bio);
+            if (user.premium) {
+                const premiumAvatarBuffer = await generatePremiumThumbnail(targetUser.displayAvatarURL({ format: 'png', size: 128 }));
+                await interaction.reply({
+                    embeds: [profileEmbed],
+                    files: [{ attachment: premiumAvatarBuffer, name: 'premiumAvatar.png' }]
+                });
+            } else {
+                // Non-premium users use the regular avatar
+                profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
+                await interaction.reply({ embeds: [profileEmbed] });
+            }
 
             // Action row with select menu for navigation
             const row = new ActionRowBuilder().addComponents(

@@ -8,7 +8,7 @@ const {
 } = require('../utils/checkMilestones.js');
 const { generateBorderedAvatar } = require('../utils/generateBorderedAvatar.js');
 const { formatTime } = require('../utils/formatTime.js');
-const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -101,16 +101,6 @@ module.exports = {
                 )
                 .setFooter({ text: "Use the menu to view achievements or language stats!" });
 
-            if (user.bio) profileEmbed.setDescription(user.bio);
-            if (user.premium) {
-                const premiumAvatarBuffer = await generateBorderedAvatar(targetUser.displayAvatarURL({ dynamic: true }));
-                console.log(premiumAvatarBuffer);
-                profileEmbed.setThumbnail(premiumAvatarBuffer);
-            } else {
-                // Non-premium users use the regular avatar
-                profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
-            }
-
             // Action row with select menu for navigation
             const row = new ActionRowBuilder().addComponents(
                 new StringSelectMenuBuilder()
@@ -134,6 +124,31 @@ module.exports = {
                         }
                     ])
             );
+
+            let attachment;
+
+            if (user.bio) profileEmbed.setDescription(user.bio);
+            if (user.premium) {
+                const selectedBorder = user.border || null;
+                if (selectedBorder) {
+                    // Generate the combined avatar with selected border
+                    const avatarWithBorderBuffer = await generateBorderedAvatar(targetUser.displayAvatarURL({ format: 'png', size: 128 }), selectedBorder);
+                    attachment = new AttachmentBuilder(avatarWithBorderBuffer, { name: 'profile_with_border.gif' });
+            
+                    // Use the attachment as the thumbnail
+                    profileEmbed.setThumbnail('attachment://profile_with_border.gif');
+            
+                    // Send the embed with the attachment
+                    return interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment] });
+                } else {
+                    // If no custom border is selected, use regular avatar
+                    profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
+                }
+            } else {
+                // Non-premium users use the regular avatar
+                profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
+                await interaction.reply({ embeds: [profileEmbed], components: [row] });
+            }
 
             // Send the main profile embed
             const message = await interaction.reply({ embeds: [profileEmbed], components: [row], fetchReply: true });

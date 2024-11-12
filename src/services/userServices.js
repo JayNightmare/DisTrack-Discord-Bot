@@ -1,4 +1,3 @@
-// src/services/userService.js
 const User = require('../models/User.js');
 
 async function registerUser(userId, username) {
@@ -89,7 +88,15 @@ async function updateUserBio(userId, bio) {
 
     user.bio = bio;
     await user.save();
-    console.log(`Updated bio for ${user.username}: ${bio}`);
+    return user;
+}
+
+async function updateUserBorder(userId, border) {
+    const user = await User.findOne({ userId });
+    if (!user) throw new Error("User not found for border update");
+
+    user.border = border;
+    await user.save();
     return user;
 }
 
@@ -102,5 +109,6 @@ module.exports = {
     updateUserSponsorStatus,
     updateUserStreak,
     getUserData,
-    updateUserBio
+    updateUserBio,
+    updateUserBorder
 };

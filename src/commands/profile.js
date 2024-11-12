@@ -87,8 +87,7 @@ module.exports = {
             const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')
                 .setTitle(`${userDisplayName}'s Coding Profile`)
-                .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-                // .setDescription(user.bio || `Your Coding Stats!`)
+                // .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },
@@ -104,15 +103,12 @@ module.exports = {
 
             if (user.bio) profileEmbed.setDescription(user.bio);
             if (user.premium) {
-                const premiumAvatarBuffer = await generatePremiumThumbnail(targetUser.displayAvatarURL({ format: 'png', size: 128 }));
-                await interaction.reply({
-                    embeds: [profileEmbed],
-                    files: [{ attachment: premiumAvatarBuffer, name: 'premiumAvatar.png' }]
-                });
+                const premiumAvatarBuffer = await generateBorderedAvatar(targetUser.displayAvatarURL({ dynamic: true }));
+                console.log(premiumAvatarBuffer);
+                profileEmbed.setThumbnail(premiumAvatarBuffer);
             } else {
                 // Non-premium users use the regular avatar
                 profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
-                await interaction.reply({ embeds: [profileEmbed] });
             }
 
             // Action row with select menu for navigation

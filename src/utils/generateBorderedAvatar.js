@@ -7,6 +7,7 @@ const path = require('path');
  * @param {string} borderName - The name of the selected border image file.
  * @returns {Buffer} - The generated avatar image with border as a buffer.
  */
+
 async function generateBorderedAvatar(avatarUrl, borderName) {
     const canvasSize = 128;
     const canvas = createCanvas(canvasSize, canvasSize);

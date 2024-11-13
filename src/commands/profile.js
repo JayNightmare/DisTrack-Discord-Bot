@@ -87,7 +87,6 @@ module.exports = {
             const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')
                 .setTitle(`${userDisplayName}'s Coding Profile`)
-                // .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },
@@ -150,8 +149,11 @@ module.exports = {
                 await interaction.reply({ embeds: [profileEmbed], components: [row] });
             }
 
+            let message;
+
             // Send the main profile embed
-            const message = await interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment], fetchReply: true });
+            if (attachment) message = await interaction.reply({ embeds: [profileEmbed], components: [row], files: [attachment], fetchReply: true });
+            else message = await interaction.reply({ embeds: [profileEmbed], components: [row], fetchReply: true });
 
             // Handle select menu interaction
             const filter = i => i.user.id === interaction.user.id;

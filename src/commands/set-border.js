@@ -18,7 +18,7 @@ module.exports = {
                     { name: 'Terminal', value: '../borders/terminal'},
                     { name: 'Gloop', value: '../borders/gloop' },
                     { name: 'Snow Border', value: '../borders/snow-border'},
-                    { name: 'None', value: null }
+                    { name: 'None', value: 'none' }
                 )
         ),
 
@@ -30,8 +30,9 @@ module.exports = {
         try {
             await interaction.deferReply();
 
-            if (selectedBorder === null) {
+            if (selectedBorder === 'none') {
                 await updateUserBorder(targetUser.id, null);
+                
                 const embed = new EmbedBuilder()
                     .setColor('#1d5b5b')
                     .setTitle(`${targetUser.displayName}'s Profile with Border`)
@@ -39,7 +40,7 @@ module.exports = {
                     .setDescription('Your border has been removed');
 
                 // Send the embed with the image file
-                await interaction.followUp({ embeds: [embed] });
+                return interaction.followUp({ embeds: [embed] });
             }
 
             // Generate the combined avatar with selected border

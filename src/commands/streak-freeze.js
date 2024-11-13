@@ -23,7 +23,7 @@ module.exports = {
                 });
             }
 
-            const currentDate = new Date();
+            const currentDate = new Date().getTime();
             const freezeTill = user.lastSessionDate || currentDate; // Defaults to 1970-01-01 if no previous freeze
             const cooldownPeriod = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 

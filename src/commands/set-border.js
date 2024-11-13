@@ -18,6 +18,7 @@ module.exports = {
                     { name: 'Terminal', value: '../borders/terminal'},
                     { name: 'Gloop', value: '../borders/gloop' },
                     { name: 'Snow Border', value: '../borders/snow-border'},
+                    { name: 'None', value: null }
                 )
         ),
 
@@ -29,6 +30,18 @@ module.exports = {
         try {
             await interaction.deferReply();
 
+            if (selectedBorder === null) {
+                await updateUserBorder(targetUser.id, null);
+                const embed = new EmbedBuilder()
+                    .setColor('#1d5b5b')
+                    .setTitle(`${targetUser.displayName}'s Profile with Border`)
+                    .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
+                    .setDescription('Your border has been removed');
+
+                // Send the embed with the image file
+                await interaction.followUp({ embeds: [embed] });
+            }
+
             // Generate the combined avatar with selected border
             const borderedAvatarBuffer = await generateBorderedAvatar(avatarUrl, selectedBorder);
             if (borderedAvatarBuffer === null) return interaction.followUp(`Border needs to cooldown, try again later`);
@@ -39,7 +52,7 @@ module.exports = {
             // Create an embed to display the bordered avatar
             const embed = new EmbedBuilder()
                 .setColor('#1d5b5b')
-                .setTitle(`${targetUser.username}'s Profile with Border`)
+                .setTitle(`${targetUser.displayName}'s Profile with Border`)
                 .setThumbnail('attachment://borderedAvatar.gif')
                 .setDescription('Your selected border has been applied!');
 

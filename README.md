@@ -2,78 +2,69 @@
 
 DisTrack is a Discord bot that integrates with a VSCode extension to help you track your coding activities, including time spent coding, languages used, achievements, and streaks.
 
+> Bot Invite: https://discord.com/oauth2/authorize?client_id=1305258645906526328
+
 ## Table of Contents
-- [DisTrack - Discord Coding Tracker Bot](#distrack---discord-coding-tracker-bot)
+- [VSCode Coding Tracker Extension](#vscode-coding-tracker-extension)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
   - [Commands](#commands)
-  - [Example Usage](#example-usage)
   - [Contributing](#contributing)
   - [License](#license)
 
 ## Features
 
-- **Profile Management**: View your coding profile, including total time coded, current streak, longest streak, and last session time.
-- **Achievement Tracking**: Earn achievements for reaching milestones based on your coding time.
-- **Language Statistics**: View detailed stats on the languages you’ve coded in.
-- **Leaderboard**: Compete with others to see who has the most coding time.
+- **Coding Session Tracking**: Automatically tracks coding sessions when you start VSCode.
+- **Language-Specific Time Tracking**: Records the time spent in each programming language.
+- **Discord Integration**: Shows a real-time status in Discord, including the file and language.
+- **Achievements**: Gain achievements for milestones based on your total coding time.
+- **Profile Management**: View coding stats and achievements through a Discord bot.
 
 ## Installation
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/DisTrack.git
+   git clone https://github.com/JayNightmare/DisTrack-Discord-Bot
    ```
 2. **Install Dependencies**:
    ```bash
-   cd DisTrack
+   cd DisTrack-VSCode-Extension
    npm install
    ```
-3. **MongoDB Setup**:
+3. **Setup MongoDB**:
    - Ensure MongoDB is installed and running.
-   - Create a database named `distrack` and note the connection URI.
+   - Create a database and note the connection URI.
 
 ## Configuration
 
-1. **Set Environment Variables**:
-   - Create a `.env` file in the root directory with the following variables:
-     ```plaintext
-     TOKEN=your_discord_bot_token
-     MONGODB_URI=your_mongodb_connection_uri
-     CLIENT_ID=your_discord_client_id
-     GUILD_ID=your_discord_guild_id
-     ```
-2. **MongoDB Setup**:
-   - Ensure the IP address of your server is whitelisted in MongoDB Atlas or your MongoDB instance.
-
+1. **MongoDB Setup**:
+   - Ensure the IP address for your server is whitelisted in MongoDB Atlas or your MongoDB instance.
+   
 ## Usage
 
-1. **Start the Bot**:
-   - Run the following command to start the bot:
-     ```bash
-     node server.js
-     ```
+1. **Start VSCode**:
+   - When you start VSCode, the extension will automatically begin a coding session and track your active language and coding time.
+   
+2. **Link Discord**:
+   - Click on the status bar item "Link to Discord" and enter your Discord ID to enable activity tracking and achievements through the Discord bot.
 
-2. **Invite the Bot to Your Server**:
-   - Use the OAuth2 URL Generator in the Discord Developer Portal with the necessary bot permissions to invite the bot to your server.
+3. **Stop Coding Session**:
+   - When you close VSCode, the session ends, and your session data is saved to the MongoDB database.
 
 ## Commands
 
-- **/profile** `[user]`: Displays your coding profile with total coding time, achievements, and language statistics.
-- **/leaderboard**: Shows the top coders based on total coding time.
-- **/achievements**: Lists milestones you've achieved based on coding time.
-- **/help**: Provides help and usage instructions for each command.
-
-## Example Usage
-
-```
-/profile @User
-```
-
-This command displays the coding profile of a specified user, showing their coding stats, streaks, and achievements.
+- **Profile**: Displays your coding profile, including total coding time, language stats, and achievements.
+- **Leaderboard**: View the top users based on total coding time
+- **Achievements**: Lists the milestones you’ve achieved
+- **Compare**: Compares your stats against another user's stats
+- **Freeze Streak**: Freezes your streak
+- **Help**: Shows all commands and info about the bot
+- **Recents**: Shows information from recent session
+- **Set Bio**: Sets the bio for the profile command
+- **Bug Reports and Suggestions**: Sends your feedback to the developement team so we can improve the extension and bot
 
 ## Contributing
 
@@ -84,7 +75,7 @@ This command displays the coding profile of a specified user, showing their codi
    ```
 3. Commit changes:
    ```bash
-   git commit -m "Add a new feature"
+   git commit -m "Add a feature"
    ```
 4. Push to the branch:
    ```bash
@@ -94,4 +85,4 @@ This command displays the coding profile of a specified user, showing their codi
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the Creative Commons Legal Code License. See the [LICENSE](LICENSE) file for more details.

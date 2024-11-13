@@ -15,7 +15,7 @@
     "mongoose": "^8.8.1"
   },
   "name": "distrack-bot",
-  "version": "0.0.1",
+  "version": "0.7.1",
   "description": "Discord bot that shows stats from vscode extension",
   "main": "bot.js",
   "scripts": {

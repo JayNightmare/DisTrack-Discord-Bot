@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { WebhookClient, EmbedBuilder } = require('discord.js');
+const { registerUser, getUserData } = require('../services/userServices.js');
 require('dotenv').config();
 
 const webhook = new WebhookClient({ url: process.env.PREMIUM_REQUEST_REPORT_WH });

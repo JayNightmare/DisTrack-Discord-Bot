@@ -41,7 +41,7 @@ module.exports = {
                 embed.addFields({ name: section, value: selectedSection, inline: true });
                 embed.setURL(selectedSection);
             } else if (selectedSection === "https://distrack-website.vercel.app/temp") {
-                ection = "Download";
+                section = "Download";
                 embed.addFields({ name: section, value: selectedSection, inline: true });
                 embed.setURL(selectedSection);
             } else if (selectedSection === "github") {

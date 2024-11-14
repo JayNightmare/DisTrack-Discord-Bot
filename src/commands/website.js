@@ -40,6 +40,10 @@ module.exports = {
                 section = "Contact";
                 embed.addFields({ name: section, value: selectedSection, inline: true });
                 embed.setURL(selectedSection);
+            } else if (selectedSection === "https://distrack-website.vercel.app/temp") {
+                ection = "Download";
+                embed.addFields({ name: section, value: selectedSection, inline: true });
+                embed.setURL(selectedSection);
             } else if (selectedSection === "github") {
                 const extension = 'https://github.com/JayNightmare/DisTrack-VSCode-Extension';
                 const bot = 'https://github.com/JayNightmare/DisTrack-Discord-Bot';

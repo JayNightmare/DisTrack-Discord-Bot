@@ -146,7 +146,6 @@ module.exports = {
             } else {
                 // Non-premium users use the regular avatar
                 profileEmbed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
-                await interaction.reply({ embeds: [profileEmbed], components: [row] });
             }
 
             let message;

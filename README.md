@@ -1,7 +1,7 @@
 <div align=center>
   <img src="images/distrack.png" width=225 radius=10 />
 </div>
-
+ 
 <div align=center>
   <h1>
     DisTrack - Discord Coding Tracker Bot

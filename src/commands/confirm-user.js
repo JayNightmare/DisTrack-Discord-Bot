@@ -50,33 +50,38 @@ module.exports = {
             return interaction.reply({ content: 'User not found. Save a session first and try again.', ephemeral: true });
         }
 
-        const embed = new EmbedBuilder()
-            .setTitle('Premium Access Request')
-            .addFields(
-                { name: 'User ID', value: userId },
-                { name: 'Action', value: action }
-            );
-
-        if (action === 'approve') {
-            await registerUser(userId, user.username);
-            embed.setDescription(`Your premium request has been approved!`).setColor('#46c9b0');
-            await approvedWebhook.send({ embeds: [embed] });
-
-        } else if (action === 'reject') {
-            embed.setDescription(`Your premium request has been rejected.\nTo be approved, sponsor the bot on github -> https://github.com/sponsors/JayNightmare`).setColor('#f8312f');
-            await deniedWebhook.send({ embeds: [embed] });
-        }
-
-        // Send DM to the user
         try {
-            const targetUser = await client.users.fetch(userId);
-            await targetUser.send({ embeds: [embed] });
-
-            interaction.reply({ content: `Action ${action} completed and user has been notified via DM.`, ephemeral: true });
+            const embed = new EmbedBuilder()
+                .setTitle('Premium Access Request')
+                .addFields(
+                    { name: 'User ID', value: userId },
+                    { name: 'Action', value: action }
+                );
+    
+            if (action === 'approve') {
+                await registerUser(userId, user.username);
+                embed.setDescription(`Your premium request has been approved!`).setColor('#46c9b0');
+                await approvedWebhook.send({ embeds: [embed] });
+    
+            } else if (action === 'reject') {
+                embed.setDescription(`Your premium request has been rejected.\nTo be approved, sponsor the bot on github -> https://github.com/sponsors/JayNightmare`).setColor('#f8312f');
+                await deniedWebhook.send({ embeds: [embed] });
+            }
+    
+            // Send DM to the user
+            try {
+                const targetUser = await client.users.fetch(userId);
+                await targetUser.send({ embeds: [embed] });
+    
+                interaction.reply({ content: `Action ${action} completed and user has been notified via DM.`, ephemeral: true });
+            } catch (error) {
+                console.error('Failed to send DM:', error);
+    
+                interaction.reply({ content: `Action ${action} completed but failed to notify the user via DM.`, ephemeral: true });
+            }
         } catch (error) {
-            console.error('Failed to send DM:', error);
-
-            interaction.reply({ content: `Action ${action} completed but failed to notify the user via DM.`, ephemeral: true });
+            console.error('Error processing action:', error);
+            await interaction.reply({ content: 'An error occurred while processing the action.', ephemeral: true });
         }
     }
 };

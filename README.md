@@ -1,13 +1,13 @@
 <div align=center>
   <img src="images/distrack.png" width=225 radius=10 />
 </div>
-
+ 
 <div align=center>
   <h1>
     DisTrack - Discord Coding Tracker Bot
   </h1>
 </div>
-
+ 
 DisTrack is a Discord bot that integrates with a VSCode extension to help you track your coding activities, including time spent coding, languages used, achievements, and streaks.
 
 > Bot Invite: https://discord.com/oauth2/authorize?client_id=1305258645906526328

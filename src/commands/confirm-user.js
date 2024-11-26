@@ -29,9 +29,21 @@ module.exports = {
         const action = interaction.options.getString('action');
         const user = await getUserData(userId);
 
-        // Check if the interaction user is the Owner
         if (interaction.user.id !== process.env.OWNER_ID) {
-            return interaction.reply({ content: 'No <3', ephemeral: true });
+            const user_embed = new EmbedBuilder()
+                .setTitle('Unauthorized Action Attempted')
+                .setDescription(`Nuh uh! You don't have permission to use this command!\n\n**💯 This action has been reported to the bot owner 💯**`)
+                .setColor('#ff0000')
+                .setTimestamp();
+
+            const wh_embed = new EmbedBuilder()
+                .setTitle('Unauthorized Action Attempted')
+                .setDescription(`User <@${interaction.user.id}> (User ID: ${interaction.user.id}) attempted to grant premium access to <@${targetUser.id}> (User ID: ${targetUser.id})`)
+                .setColor('#ff0000')
+                .setTimestamp();
+
+            await deniedWebhook.send({ embeds: [wh_embed] });
+            return await interaction.reply({ embeds: [user_embed], ephemeral: true });
         }
 
         if (!user) {

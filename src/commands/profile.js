@@ -6,7 +6,7 @@ const {
     checkForLanguageAchievements,
     getNextMilestone
 } = require('../utils/checkMilestones.js');
-const { generateBorderedAvatar } = require('../utils/generateBorderedAvatar.js');
+const { generateBorderedAvatar } = require('../utils/generateFunctions.js');
 const { formatTime } = require('../utils/formatTime.js');
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { generateBorderedAvatar } = require('../utils/generateBorderedAvatar');
+const { generateBorderedAvatar } = require('../utils/generateFunctions');
 const { updateUserBorder } = require('../services/userServices.js');
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 

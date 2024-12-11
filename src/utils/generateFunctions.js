@@ -62,4 +62,20 @@ async function generateBorderedAvatar(avatarUrl, borderName) {
     }
 }
 
-module.exports = { generateBorderedAvatar };
+const generateStatsSummary = (userStats) => {
+    const totalHours = userStats.reduce((sum, session) => sum + session.hours, 0);
+    const streaks = calculateStreaks(userStats); // Implement streak logic
+    const mostProductiveDay = calculateMostProductiveDay(userStats); // Implement logic for this
+
+    return {
+        totalHours,
+        longestStreak: streaks.longest,
+        mostProductiveDay,
+    };
+};
+
+
+module.exports = {
+    generateBorderedAvatar,
+    generateStatsSummary
+};

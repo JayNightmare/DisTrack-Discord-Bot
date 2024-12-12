@@ -2,6 +2,7 @@ const { createCanvas, loadImage } = require('canvas');
 const GIFEncoder = require('gifencoder'); // Use gifencoder instead of gif-encoder
 const fs = require('fs');
 const path = require('path');
+const User = require('../models/User.js');
 
 /**
  * Generates an animated GIF avatar with a selected border overlay.
@@ -61,6 +62,25 @@ async function generateBorderedAvatar(avatarUrl, borderName) {
         return null;
     }
 }
+
+// TODO : Fix this error
+
+// Helper function to calculate streaks
+const calculateStreaks = (userStats) => {
+    let currentStreak = 0;
+    let longestStreak = 0;
+
+    for (const session of userStats) {
+        if (session.hours > 0) {
+            currentStreak++;
+            longestStreak = Math.max(longestStreak, currentStreak);
+        } else {
+            currentStreak = 0;
+        }
+    }
+
+    return { current: currentStreak, longest: longestStreak };
+};
 
 const generateStatsSummary = (userStats) => {
     const totalHours = userStats.reduce((sum, session) => sum + session.hours, 0);

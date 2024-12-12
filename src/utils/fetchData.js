@@ -11,7 +11,7 @@ async function getUserYearlyStats(userId) {
         // Query sessions within the year
         const sessions = await User.find({
             userId,
-            startTime: { $gte: startOfYear, $lte: endOfYear }, // Adjust for your date field
+            lastSessionDate: { $gte: startOfYear, $lte: endOfYear }, // Adjust for your date field
         });
 
         if (!sessions || sessions.length === 0) {
@@ -24,8 +24,6 @@ async function getUserYearlyStats(userId) {
         throw error;
     }
 }
-
-
 
 module.exports = {
     getUserYearlyStats

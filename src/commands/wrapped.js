@@ -15,7 +15,7 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setColor('#1DB954')
-                .setTitle(`${interaction.user.username}'s 2024 Wrapped`)
+                .setTitle(`${interaction.user.displayName}'s 2024 Wrapped`)
                 .setDescription('Here is what you accomplished this year!')
                 .addFields(
                     { name: 'Total Hours', value: `${statsSummary.totalHours} hours`, inline: true },

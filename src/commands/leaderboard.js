@@ -1,4 +1,3 @@
-// src/commands/leaderboard.js
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 const { formatTime } = require('../utils/formatTime');
@@ -11,10 +10,13 @@ module.exports = {
     async execute(interaction) {
         try {
             const topUsers = await User.find().sort({ totalCodingTime: -1 }).limit(10);
-            console.log("Top Users:", topUsers);
-            const leaderboard = topUsers.map((user, index) =>
-                `#${index + 1} - **<@${user.userId}>**: ${formatTime(user.totalCodingTime)}`
-            ).join('\n');
+
+            const leaderboard = topUsers.map((user, index) => {
+                const badgeIcons = (user.badges && user.badges.length > 0) ? user.badges.map(badge => badge.icon).join(' ') : '';
+                const medal = index === 0 ? '🏅' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+
+                return `${medal} - **${user.username}**${badgeIcons ? ' ' + badgeIcons : ''}: ${formatTime(user.totalCodingTime)}`
+            }).join('\n');
 
             const embed = new EmbedBuilder()
                 .setColor('#FFD700')

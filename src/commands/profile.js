@@ -83,10 +83,12 @@ module.exports = {
             // Display Badges, including Premium Badge if applicable
             const badges = [...user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`)].filter(Boolean).join('\n') || "No badges earned yet.";
 
+            const profileTitle = `⭐ ${userDisplayName}'s Coding Profile`;
+
             // Main profile embed
             const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')
-                .setTitle(`${userDisplayName}'s Coding Profile`)
+                .setTitle(profileTitle)
                 .setTimestamp()
                 .addFields(
                     { name: "🕒 Total Coding Time", value: totalCodingTime, inline: true },

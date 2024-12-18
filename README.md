@@ -12,7 +12,7 @@ DisTrack is a Discord bot that integrates with a VSCode extension to help you tr
 
 > Bot Invite: https://discord.com/oauth2/authorize?client_id=1305258645906526328
 
-> Bot Version: beta@v0.7.1
+> Bot Version: beta@v0.7.8
 
 > Extension: 
 - [Source Code](https://github.com/JayNightmare/DisTrack-VSCode-Extension)
@@ -21,15 +21,14 @@ DisTrack is a Discord bot that integrates with a VSCode extension to help you tr
 > Extension Version: beta@v0.5.9
 
 ## Table of Contents
-- [VSCode Coding Tracker Extension](#vscode-coding-tracker-extension)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Usage](#usage)
-  - [Commands](#commands)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Commands](#commands)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 

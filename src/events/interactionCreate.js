@@ -24,7 +24,7 @@ module.exports = {
 
             try {
                 if (action === 'accept') {
-                    const badgeName = 'Dev';
+                    const badgeName = 'Dis.Developer';
                     const badgeIcon = '<:Discord_Developer:1318976854358622230>';
                     const userData = await getUserData(user.id);
                     if (!userData.badges.some(badge => badge.name === badgeName)) await updateUserBadges(user.id, { name: badgeName, icon: badgeIcon, dateEarned: new Date() });

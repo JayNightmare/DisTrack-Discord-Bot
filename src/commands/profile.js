@@ -9,6 +9,7 @@ const {
 const { generateBorderedAvatar } = require('../utils/generateFunctions.js');
 const { formatTime } = require('../utils/formatTime.js');
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
+const User = require('../models/User.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -83,7 +84,23 @@ module.exports = {
             // Display Badges, including Premium Badge if applicable
             const badges = [...user.badges.map(b => `• ${b.emojiId || b.icon || '🏅'} ${b.name}`)].filter(Boolean).join('\n') || "No badges earned yet.";
 
-            const profileTitle = `⭐ ${userDisplayName}'s Coding Profile`;
+            let profileTitle;
+            const topUsers = await User.find().sort({ totalCodingTime: -1 });
+
+            // Find the user's rank
+            const rank = topUsers.findIndex(u => u.userId === userId) + 1; // Ranks start at 1
+
+            // Determine the rank display
+            let rankDisplay;
+            if (rank === 1) rankDisplay = '🏅';
+            else if (rank === 2) rankDisplay = '🥈';
+            else if (rank === 3) rankDisplay = '🥉';
+            else rankDisplay = `#${rank}`;
+
+            // Set the profile title
+            if (user.userId === process.env.OWNER_ID) { profileTitle = `⭐ ${userDisplayName}'s Coding Profile ⭐`; }
+            else { profileTitle = `${rankDisplay} | ${userDisplayName}'s Coding Profile`; }
+
 
             // Main profile embed
             const profileEmbed = new EmbedBuilder()

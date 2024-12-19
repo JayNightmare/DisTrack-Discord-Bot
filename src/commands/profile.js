@@ -101,7 +101,6 @@ module.exports = {
             if (user.userId === process.env.OWNER_ID) { profileTitle = `⭐ ${userDisplayName}'s Coding Profile ⭐`; }
             else { profileTitle = `${rankDisplay} | ${userDisplayName}'s Coding Profile`; }
 
-
             // Main profile embed
             const profileEmbed = new EmbedBuilder()
                 .setColor('#1d5b5b')

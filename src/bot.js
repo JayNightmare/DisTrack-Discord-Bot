@@ -4,7 +4,7 @@ const express = require('express');
 const fs = require('fs');
 const { DISCORD_TOKEN, PORT } = require('./configs/config');
 const { connectToDatabase } = require('./utils/database');
-
+ 
 const client = new Client({ 
     intents: [
         GatewayIntentBits.Guilds, 

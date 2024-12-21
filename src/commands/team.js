@@ -11,12 +11,12 @@ module.exports = {
         const hosting = [ "Linode - Ubuntu Server" ];
 
         const teamMembers = [
-            { name: "JayNightmare", role: "Lead Developer", github: "https://github.com/JayNightmare" },
+            { name: "JayNightmare", role: "Lead Developer", github: "https://github.com/JayNightmare", discord: "https://discord.com/users/373097473553727488" },
         ];
 
         const toolsList = tools.map((tool, index) => `**${index + 1}.** ${tool}`).join("\n");
         const hostingList = hosting.map((host, index) => `**${index + 1}.** ${host}`).join("\n");
-        const teamList = teamMembers.map(member => `**${member.name}** - *${member.role}*\n[Github Profile](${member.github})`).join('\n');
+        const teamList = teamMembers.map(member => `**${member.name}** - *${member.role}*\n[Github Profile](${member.github}) ⁝ [Discord Profile](${member.discord})`).join('\n');
 
         const embed = new EmbedBuilder()
             .setColor("#5865F2")

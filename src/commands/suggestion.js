@@ -15,7 +15,7 @@ module.exports = {
                 .setDescription('Your suggestion')
                 .setRequired(true)
         ),
-
+ 
     async execute(interaction) {
         const suggestionText = interaction.options.getString('suggestion');
         const user = interaction.user;

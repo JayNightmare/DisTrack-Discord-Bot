@@ -11,14 +11,17 @@
 DisTrack is a Discord bot that integrates with a VSCode extension to help you track your coding activities, including time spent coding, languages used, achievements, and streaks.
 
 > Bot Invite: https://discord.com/oauth2/authorize?client_id=1305258645906526328
-
+> 
 > Bot Version: beta@v0.7.8
+> - [Source Code](https://github.com/JayNightmare/DisTrack-Discord-Bot)
 
 > Extension: 
-- [Source Code](https://github.com/JayNightmare/DisTrack-VSCode-Extension)
-- [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=JayNightmare.dis-track)
+> - [Source Code](https://github.com/JayNightmare/DisTrack-VSCode-Extension)
+> - [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=JayNightmare.dis-track)
+>
+> Extension Version: beta@v0.6.0
 
-> Extension Version: beta@v0.5.9
+> Website: https://distrack-website.vercel.app
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)

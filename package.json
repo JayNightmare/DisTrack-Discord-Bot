@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "@jimp/gif": "^0.22.12",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "body-parser": "^1.20.3",
     "canvas": "^2.11.2",
-    "discord.js": "^14.16.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "gif-encoder": "^0.7.2",
     "gif-frames": "^1.0.1",
     "gifencoder": "^2.0.1",
     "jimp": "^1.6.0",
-    "mongodb": "^6.10.0",
-    "mongoose": "^8.8.1"
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.10.1"
   },
   "name": "distrack-bot",
   "version": "0.7.8",

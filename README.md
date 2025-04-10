@@ -1,5 +1,5 @@
 <div align=center>
-  <img src="images/distrack.png" width=225 radius=10 />
+  <img src="images/New Distrack.jpg" width=225 radius=10 />
 </div>
   
 <div align=center>

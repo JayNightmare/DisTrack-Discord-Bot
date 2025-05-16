@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageFlags } = require('discord.js');
 const User = require('../models/User'); // Make sure this path matches the location of your User model
 const { formatTime } = require('../utils/formatTime');
 
@@ -9,10 +10,8 @@ module.exports = {
 
     async execute(interaction) {
         try {
-
             // Only allow the bot owner to run this command
             if (interaction.user.id !== process.env.OWNER_ID) {
-                // embed message
                 const embed = {
                     color: 0xff0000,
                     title: 'Permission Denied',
@@ -40,24 +39,61 @@ module.exports = {
                 return interaction.reply({ embeds: [embed] });
             }
 
+            // Pagination logic
+            const usersPerPage = 10;
+            const totalPages = Math.ceil(users.length / usersPerPage);
+            let currentPage = 1;
 
-            // Create a formatted string of users to display
-            const userList = users.map(user =>`- Name: <@${user.userId}>\n- User ID: ${user.userId}\n- Database ID: ${user.id}\n- Total Coding Time: ${totalCodingTime = formatTime(user.totalCodingTime || 0)}`).join('\n\n');
+            const generateEmbed = (page) => {
+                const startIndex = (page - 1) * usersPerPage;
+                const endIndex = startIndex + usersPerPage;
+                const fields = users.slice(startIndex, endIndex).map(user => ({
+                    name: `${user.username}`,
+                    value: `User: <@${user.userId}>\n**User ID:** ${user.userId}\n**Database ID:** ${user.id}\n**Total Coding Time:** ${formatTime(user.totalCodingTime || 0)}`,
+                    inline: true
+                }));
 
-            // Send the formatted list as an embed
-            const embed = {
-                color: 0x27371d,
-                title: 'Linked Users',
-                description: userList,
-                footer: {
-                    text: `Total users: ${users.length}`
-                }
+                return {
+                    color: 0x27371d,
+                    title: 'Linked Users',
+                    fields: fields,
+                    footer: {
+                        text: `Page ${page} of ${totalPages} | Total users: ${users.length}`
+                    }
+                };
             };
 
-            await interaction.reply({ embeds: [embed] });
+            if (totalPages > 1) {
+                const initialEmbed = generateEmbed(currentPage);
+                await interaction.reply({ embeds: [initialEmbed] });
+                const message = await interaction.fetchReply();
+                await message.react('⬅️');
+                await message.react('➡️');
+
+                const filter = (reaction, user) => {
+                    return ['⬅️', '➡️'].includes(reaction.emoji.name) && user.id === interaction.user.id;
+                };
+
+                const collector = message.createReactionCollector({ filter, time: 60000 });
+
+                collector.on('collect', (reaction) => {
+                    if (reaction.emoji.name === '⬅️' && currentPage > 1) {
+                        currentPage--;
+                    } else if (reaction.emoji.name === '➡️' && currentPage < totalPages) {
+                        currentPage++;
+                    }
+
+                    message.edit({ embeds: [generateEmbed(currentPage)] });
+                    reaction.users.remove(interaction.user.id);
+                });
+
+                collector.on('end', () => {
+                    message.reactions.removeAll().catch(console.error);
+                });
+            }
         } catch (error) {
             console.error('Error fetching users:', error);
-            await interaction.reply({ content: 'There was an error retrieving the user list', ephemeral: true });
+            await interaction.reply({ content: 'There was an error retrieving the user list', flags: MessageFlags.Ephemeral });
         }
     }
 };

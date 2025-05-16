@@ -25,6 +25,21 @@ async function getUserYearlyStats(userId) {
     }
 }
 
+// Create a getAllUsers function to fetch all users
+async function getAllUsers() {
+    try {
+        const users = await User.find();
+        if (!users || users.length === 0) {
+            throw new Error("No users found in the database");
+        }
+        return users;
+    } catch (error) {
+        console.error("Error fetching all users:", error);
+        throw error;
+    }
+}
+
 module.exports = {
-    getUserYearlyStats
+    getUserYearlyStats,
+    getAllUsers
 };

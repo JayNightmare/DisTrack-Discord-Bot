@@ -18,7 +18,8 @@ jobs:
           username: ${{ secrets.LINODE_USER }}
           key: ${{ secrets.LINODE_SSH_KEY }}
           script: |
-            cd ~/code/
+            cd ~/code/DisTrack-Discord-Bot
             git fetch --all
             git reset --hard origin/prod
             npm ci
+            pm2 restart 10

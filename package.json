@@ -3,7 +3,7 @@
     "@jimp/gif": "^0.22.12",
     "axios": "^1.9.0",
     "body-parser": "^1.20.3",
-    "canvas": "^2.11.2",
+    "canvas": "^3.1.0",
     "discord.js": "^14.19.3",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
@@ -12,7 +12,7 @@
     "gifencoder": "^2.0.1",
     "jimp": "^1.6.0",
     "mongodb": "^6.16.0",
-    "mongoose": "^8.15.0"
+    "mongoose": "^8.15.1"
   },
   "name": "distrack-bot",
   "version": "0.7.8",

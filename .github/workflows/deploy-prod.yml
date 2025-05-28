@@ -1,0 +1,24 @@
+# 
+# On push to prod, SSH into your Linode, pull, reinstall, restart.
+#
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ prod ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.LINODE_HOST }}
+          username: ${{ secrets.LINODE_USER }}
+          key: ${{ secrets.LINODE_SSH_KEY }}
+          script: |
+            cd ~/code/
+            git fetch --all
+            git reset --hard origin/prod
+            npm ci

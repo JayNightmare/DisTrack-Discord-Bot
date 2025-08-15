@@ -1,12 +1,10 @@
 <div align=center>
   <img src="images/New Distrack.jpg" width=225 radius=10 />
-</div>
-  
-<div align=center>
-  <h1>
-    DisTrack - Discord Coding Tracker Bot
-  </h1>
-</div>
+
+
+# DisTrack - Discord Coding Tracker Bot
+
+
  
 DisTrack is a Discord bot that integrates with a VSCode extension to help you track your coding activities, including time spent coding, languages used, achievements, and streaks.
 
@@ -20,6 +18,7 @@ DisTrack is a Discord bot that integrates with a VSCode extension to help you tr
 | Backend Endpoints | API Endpoints for business logic | ![Latest Release](https://img.shields.io/github/v/release/JayNightmare/DisTrack-Backend-Endpoint-Server?label=Latest%20Release) | [GitHub](https://github.com/JayNightmare/DisTrack-Backend-Endpoint-Server)
 | Frontend Endpoints | Bot Crawler Rich Embed logic | ![Latest Release](https://img.shields.io/github/v/release/JayNightmare/DisTrack-Frontend-Endpoint-Server?label=Latest%20Release) | [GitHub](https://github.com/JayNightmare/DisTrack-Frontend-Endpoint-Server)
 
+</div>
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)

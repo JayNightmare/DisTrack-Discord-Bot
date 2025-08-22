@@ -1,5 +1,5 @@
 <div align=center>
-  <img src="images/New Distrack.jpg" width=225 radius=10 />
+  <img src="https://github.com/JayNightmare/DisTrack-Discord-Bot/blob/main/images/New%20Distrack.jpg?raw=true" width=225 radius=10 />
 
 
 # DisTrack - Discord Coding Tracker Bot

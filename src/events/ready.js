@@ -13,6 +13,7 @@ const {
 } = require("discord.js");
 const { DISCORD_TOKEN } = require("../configs/config");
 const fs = require("fs");
+const path = require("path");
 
 module.exports = {
     name: "ready",
@@ -26,11 +27,11 @@ module.exports = {
 
         const commands = [];
         const commandFiles = fs
-            .readdirSync("./src/commands")
+            .readdirSync(path.join(__dirname, "../commands"))
             .filter((file) => file.endsWith(".js"));
 
         for (const file of commandFiles) {
-            const command = require(`../commands/${file}`);
+            const command = require(path.join(__dirname, "../commands", file));
             commands.push(command.data.toJSON());
         }
 

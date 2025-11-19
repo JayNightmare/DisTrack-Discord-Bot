@@ -33,6 +33,8 @@ client.commands = new Collection();
 const app = express();
 app.use(express.json());
 
+process.chdir(__dirname);
+
 try {
     // Load commands
     const commandFiles = fs

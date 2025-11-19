@@ -1,11 +1,11 @@
-# 
+#
 # On push to prod, SSH into your Linode, pull, reinstall, restart.
 #
 name: Deploy to Production
 
 on:
   push:
-    branches: [ prod ]
+    branches: [prod]
 
 jobs:
   deploy:
@@ -22,4 +22,4 @@ jobs:
             git fetch --all
             git reset --hard origin/prod
             npm ci
-            pm2 restart 10
+            pm2 restart 6
